@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copa Mundial de la FIFA 2026™ - QUINIELA ODARA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            padding: 20px;
+            min-height: 100vh;
+            zoom: 0.9;
+            position: relative;
+        }
+        
+        /* ========== MARCA DE AGUA CON IMÁGENES ========== */
+        .watermark-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .watermark-ball {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://www.freepnglogos.com/uploads/soccer-ball-png/soccer-ball-png-image-9.png');
+            background-repeat: repeat;
+            background-size: 60px;
+            background-position: center;
+            opacity: 0.035;
+        }
+        
+        .watermark-trophy {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-image: url('https://www.freepnglogos.com/uploads/world-cup-png-logo/world-cup-png-logo-9.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            width: 350px;
+            height: 350px;
+            opacity: 0.025;
+        }
+        
+        .watermark-field {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/football-field.png');
+            background-repeat: repeat;
+            background-size: 150px;
+            opacity: 0.015;
+        }
+        
+        .watermark-float-ball {
+            position: absolute;
+            background-image: url('https://www.freepnglogos.com/uploads/soccer-ball-png/soccer-ball-png-image-9.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.04;
+            pointer-events: none;
+        }
+        
+        .float-ball-1 { width: 80px; height: 80px; top: 15%; left: 5%; }
+        .float-ball-2 { width: 100px; height: 100px; bottom: 20%; right: 8%; }
+        .float-ball-3 { width: 60px; height: 60px; top: 40%; right: 20%; }
+        .float-ball-4 { width: 70px; height: 70px; bottom: 10%; left: 15%; }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 3px solid #f5a623; }
+        .logo-text { font-size: 36px; font-weight: 800; color: #1a1a2e; }
+        .subtitulo { display: inline-block; background: linear-gradient(135deg, #f5a623, #e8920a); color: white; padding: 12px 32px; border-radius: 50px; font-size: 22px; font-weight: bold; margin-top: 15px; text-transform: uppercase; }
+        
+        /* AVISO PRIMERA QUINIELA */
+        .aviso-fase {
+            background: #fff5e6;
+            border-left: 4px solid #f5a623;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        .aviso-fase strong { color: #e8920a; }
+        .aviso-fase .fecha { background: #f5a62320; padding: 2px 8px; border-radius: 20px; font-weight: bold; }
+        
+        .puntuacion-bar { background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); border-radius: 12px; padding: 12px 20px; margin: 20px 0 25px 0; display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 25px; border-left: 4px solid #f5a623; }
+        .puntuacion-item { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+        .puntuacion-badge { background: #1a1a2e; color: #f5a623; padding: 4px 12px; border-radius: 20px; font-weight: bold; }
+        
+        .instruccion { background: #e8f0fe; padding: 12px 20px; border-radius: 12px; margin-bottom: 25px; font-size: 0.85em; color: #1a1a2e; text-align: center; }
+        .instruccion-ejemplo { display: inline-flex; align-items: center; gap: 15px; background: white; padding: 5px 15px; border-radius: 30px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+        
+        .participante-section { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 20px 25px; border-radius: 16px; margin-bottom: 35px; display: flex; align-items: center; justify-content: flex-start; gap: 30px; flex-wrap: wrap; border: 1px solid #e0e0e0; }
+        .participante-section label { font-weight: 700; font-size: 1em; color: #1a1a2e; }
+        .participante-section input { padding: 12px 18px; font-size: 1em; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s; }
+        .participante-section input:focus { outline: none; border-color: #f5a623; box-shadow: 0 0 0 3px rgba(245,166,35,0.2); }
+        .nombre-input { width: 280px; }
+        .area-input { width: 220px; }
+        .email-input { width: 260px; }
+        
+        .buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 30px 0 20px 0; }
+        button { padding: 10px 20px; font-size: 13px; font-weight: bold; border: none; border-radius: 40px; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-csv { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%); color: white; }
+        .btn-correo { background: linear-gradient(135deg, #4285f4 0%, #3367d6 100%); color: white; }
+        .btn-imprimir-quiniela { background: linear-gradient(135deg, #34a853 0%, #2d8e47 100%); color: white; }
+        .btn-guardar { background: linear-gradient(135deg, #f5a623, #e8920a); color: #1a1a2e; }
+        .btn-limpiar { background: linear-gradient(135deg, #dc3545, #b02a37); color: white; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        /* FASE DE GRUPOS - QUINIELA */
+        .grupos-wrapper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .grupo { border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .grupo-titulo { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%); color: white; padding: 12px 18px; font-size: 1.2em; font-weight: bold; display: flex; align-items: center; justify-content: space-between; }
+        .grupo-titulo .badge { background: #f5a623; color: #1a1a2e; padding: 2px 10px; border-radius: 20px; font-size: 0.7em; }
+        .partido-header-grupos { display: grid; grid-template-columns: 45px 50px 40px 1fr 50px 40px 1fr 50px; align-items: center; padding: 10px 12px; background: #f8f9fa; border-bottom: 2px solid #f5a623; font-weight: 700; font-size: 0.75em; color: #555; gap: 4px; }
+        .header-numero { text-align: center; }
+        .header-check-local { text-align: center; }
+        .header-bandera-local { text-align: center; }
+        .header-equipo-local { text-align: left; }
+        .header-check-empate { text-align: center; }
+        .header-bandera-visitante { text-align: center; }
+        .header-equipo-visitante { text-align: left; }
+        .header-check-visitante { text-align: center; }
+        .partido-grupos { display: grid; grid-template-columns: 45px 50px 40px 1fr 50px 40px 1fr 50px; align-items: center; padding: 10px 12px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s; gap: 4px; }
+        .partido-grupos:hover { background: #fef9f0; }
+        .numero-partido { text-align: center; font-weight: bold; color: #f5a623; background: #fef9f0; padding: 4px 0; border-radius: 20px; font-size: 0.7em; }
+        .check-local, .check-empate, .check-visitante { text-align: center; }
+        .check-local input, .check-empate input, .check-visitante input { width: 18px; height: 18px; cursor: pointer; accent-color: #f5a623; margin: 0 auto; }
+        .bandera-local, .bandera-visitante { text-align: center; }
+        .bandera { width: 28px; height: 20px; object-fit: cover; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle; }
+        .equipo-local, .equipo-visitante { font-weight: 600; font-size: 0.8em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .equipo-local { color: #1a1a2e; text-align: left; }
+        .equipo-visitante { color: #666; text-align: left; }
+        
+        /* ELIMINATORIAS - QUINIELA */
+        .eliminatorias-container { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .ronda-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; }
+        .elim-titulo { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%); color: white; padding: 12px 24px; font-size: 1.2em; font-weight: bold; border-radius: 40px; margin-bottom: 25px; display: inline-block; text-align: center; }
+        .elim-titulo .badge { background: #f5a623; color: #1a1a2e; padding: 2px 10px; border-radius: 20px; font-size: 0.7em; margin-left: 10px; }
+        .elim-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: 0 auto; }
+        .elim-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
+        .elim-grid-1 { display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 600px; margin: 0 auto; }
+        .elim-card { border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); width: 100%; }
+        .elim-header { display: grid; grid-template-columns: 45px 50px 1fr 50px; align-items: center; padding: 10px 12px; background: #f8f9fa; border-bottom: 2px solid #f5a623; font-weight: 700; font-size: 0.75em; color: #555; gap: 4px; }
+        .elim-header-numero { text-align: center; }
+        .elim-header-check-izq { text-align: center; }
+        .elim-header-partido { text-align: center; }
+        .elim-header-check-der { text-align: center; }
+        .partido-elim { display: grid; grid-template-columns: 45px 50px 1fr 50px; align-items: center; padding: 10px 12px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s; gap: 4px; }
+        .partido-elim:hover { background: #fef9f0; }
+        .elim-numero { text-align: center; font-weight: bold; color: #f5a623; background: #fef9f0; padding: 4px 0; border-radius: 20px; font-size: 0.7em; }
+        .elim-check-izq, .elim-check-der { text-align: center; }
+        .elim-check-izq input, .elim-check-der input { width: 18px; height: 18px; cursor: pointer; accent-color: #f5a623; margin: 0 auto; }
+        .elim-descripcion { font-weight: 500; font-size: 0.8em; text-align: center; color: #1a1a2e; }
+        
+        /* GUÍA IMPRIMIBLE */
+        .guia-print { margin-top: 60px; padding-top: 40px; border-top: 3px solid #f5a623; page-break-before: avoid; }
+        .guia-titulo { font-size: 28px; font-weight: bold; color: #1a1a2e; text-align: center; margin-bottom: 30px; }
+        .fila-grupos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+        .grupo-guia-card { border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .grupo-guia-titulo { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%); color: white; padding: 8px 12px; font-size: 0.95em; font-weight: bold; text-align: center; }
+        .equipo-guia { display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; border-bottom: 1px solid #f0f0f0; }
+        .equipo-guia-info { display: flex; align-items: center; gap: 8px; }
+        .bandera-guia { width: 24px; height: 16px; object-fit: cover; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle; }
+        .equipo-guia-nombre { font-weight: 500; font-size: 0.7em; }
+        .equipo-guia-posicion { display: flex; gap: 4px; }
+        .posicion-cuadro { width: 20px; height: 20px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-size: 0.6em; background: #fafafa; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+        .posicion-cuadro.checked { background: #f5a623; border-color: #f5a623; color: white; }
+        
+        .arbol-guia { margin-top: 30px; margin-bottom: 30px; width: 100%; }
+        .arbol-titulo { font-size: 1.3em; font-weight: bold; color: #1a1a2e; margin-bottom: 20px; text-align: center; }
+        .ronda-guia { margin-bottom: 30px; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .ronda-guia-titulo { background: #f5a623; color: #1a1a2e; padding: 8px 20px; border-radius: 30px; font-weight: bold; display: inline-block; margin-bottom: 15px; font-size: 1em; }
+        .guia-elim-header { display: grid; grid-template-columns: 40px 1fr 180px 40px 1fr 180px; align-items: center; padding: 8px 12px; background: #f8f9fa; border-bottom: 2px solid #f5a623; font-weight: 700; font-size: 0.75em; color: #555; margin-bottom: 8px; border-radius: 8px; width: 100%; max-width: 1200px; }
+        .elim-filas-2 { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .fila-partidos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .partido-guia { display: grid; grid-template-columns: 35px 1fr 180px; align-items: center; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #f5a623; }
+        .partido-guia-numero { font-weight: bold; color: #f5a623; font-size: 0.9em; }
+        .partido-guia-desc { font-size: 0.85em; font-weight: 500; }
+        .partido-guia-ganador input { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.85em; font-family: monospace; }
+        .partido-guia-ganador input:focus { outline: none; border-color: #f5a623; }
+        
+        .elim-1-columna { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; max-width: 550px; margin: 0 auto; }
+        .partido-guia-centrado { display: grid; grid-template-columns: 35px 1fr 180px; align-items: center; padding: 8px 12px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #f5a623; width: 100%; }
+        
+        .ejemplo-lista { background: #e8f0fe; padding: 12px 15px; border-radius: 12px; margin: 15px 0; font-size: 0.75em; }
+        .decoraciones { display: flex; justify-content: center; gap: 50px; margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #fef9f0 0%, #fff5e6 100%); border-radius: 20px; flex-wrap: wrap; }
+        .deco-item { text-align: center; font-size: 1.5em; }
+        .deco-text { font-size: 0.7em; color: #666; margin-top: 5px; }
+        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0; color: #999; font-size: 0.8em; }
+        
+        .notificacion {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            color: #f5a623;
+            padding: 10px 20px;
+            border-radius: 40px;
+            z-index: 9999;
+            font-weight: bold;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        
+        @media print {
+            body { background: white; padding: 0; zoom: 1; }
+            .container { padding: 10px; box-shadow: none; max-width: 100%; background: white; }
+            .watermark-container { display: none !important; }
+            .btn-csv, .btn-correo, .btn-imprimir-quiniela, .btn-guardar, .btn-limpiar, .buttons, .decoraciones, .participante-section input, .instruccion, .puntuacion-bar, .header .subtitulo, .aviso-fase { display: none !important; }
+            .header { border-bottom: none; margin-bottom: 0; }
+            .grupos-wrapper, .eliminatorias-container { display: block; }
+            .grupo, .elim-card { break-inside: avoid; page-break-inside: avoid; }
+            .guia-print { margin-top: 0; page-break-before: avoid; }
+        }
+        
+        @media (max-width: 1200px) { .grupos-wrapper, .elim-grid-3 { grid-template-columns: repeat(2, 1fr); } .fila-grupos { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 800px) { .grupos-wrapper, .elim-grid-3, .elim-grid-2 { grid-template-columns: 1fr; } .fila-grupos { grid-template-columns: 1fr; } .fila-partidos { grid-template-columns: 1fr; } .guia-elim-header { grid-template-columns: 35px 1fr 120px 35px 1fr 120px; } }
+    </style>
+</head>
+<body>
+    <div class="watermark-container">
+        <div class="watermark-ball"></div>
+        <div class="watermark-trophy"></div>
+        <div class="watermark-field"></div>
+        <div class="watermark-float-ball float-ball-1"></div>
+        <div class="watermark-float-ball float-ball-2"></div>
+        <div class="watermark-float-ball float-ball-3"></div>
+        <div class="watermark-float-ball float-ball-4"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">🏆 Copa Mundial de la FIFA 2026™</div>
+            <div class="subtitulo">QUINIELA ODARA</div>
+        </div>
+
+        <!-- AVISO PRIMERA QUINIELA - SOLO FASE DE GRUPOS -->
+        <div class="aviso-fase">
+            📌 <strong>📅 PRIMERA QUINIELA - SOLO FASE DE GRUPOS</strong><br>
+            ✅ Esta quiniela contiene SOLO los <strong>48 partidos de la FASE DE GRUPOS</strong>.<br>
+            ⏰ Fecha límite: <span class="fecha">10 de junio de 2026</span><br>
+            📥 Descarga el CSV y envíamelo antes de la fecha límite.<br>
+            ⚽ <strong>Después de la fase de grupos, recibirás una SEGUNDA QUINIELA</strong> con los cruces reales de eliminatorias (ya con los equipos clasificados) y deberás enviarla nuevamente.
+        </div>
+
+        <div class="puntuacion-bar">
+            <div class="puntuacion-item">⚽ <strong>Puntuación:</strong></div>
+            <div class="puntuacion-item"><span class="puntuacion-badge">3 pts</span> Ganador correcto</div>
+            <div class="puntuacion-item"><span class="puntuacion-badge">1 pt</span> Empate correcto</div>
+            <div class="puntuacion-item">📅 Fecha límite: <strong>10 de junio 2026</strong></div>
+        </div>
+
+        <div class="participante-section">
+            <label>👤 Tu nombre completo:</label>
+            <input type="text" id="nombreParticipante" class="nombre-input">
+            <label>📌 Puesto o área de trabajo:</label>
+            <input type="text" id="areaParticipante" class="area-input">
+            <label>📧 Correo electrónico:</label>
+            <input type="email" id="emailParticipante" class="email-input">
+        </div>
+
+        <div class="instruccion">
+            📌 <strong>¿Cómo llenar la quiniela?</strong>
+            <div class="instruccion-ejemplo">
+                <span style="background:#f5a62320; padding:5px 12px; border-radius:20px;">
+                    ✅ <strong>Fase Grupos:</strong> ✅ México &nbsp;&nbsp; ☐ Empate &nbsp;&nbsp; ☐ Sudáfrica
+                </span>
+                <span style="background:#f5a62320; padding:5px 12px; border-radius:20px;">
+                    ✅ <strong>Eliminatorias:</strong> ✅ Gana A &nbsp;&nbsp; ☐ Gana B
+                </span>
+            </div>
+        </div>
+
+        <div id="gruposContainer" class="grupos-wrapper"></div>
+        <div id="eliminatoriasContainer" class="eliminatorias-container"></div>
+
+        <div class="buttons">
+            <button class="btn-csv" onclick="descargarCSV()">📥 Descargar CSV</button>
+            <button class="btn-correo" onclick="enviarPorCorreo()">✉️ Preparar correo con CSV</button>
+            <button class="btn-imprimir-quiniela" onclick="imprimirSoloQuiniela()">📄 Imprime tu quiniela en PDF</button>
+            <button class="btn-guardar" onclick="guardarProgreso()">💾 Guardar progreso</button>
+            <button class="btn-limpiar" onclick="limpiarProgreso()">🗑️ Limpiar todo</button>
+        </div>
+
+        <div class="decoraciones">
+            <div class="deco-item"><div>🏆</div><div class="deco-text">Mundial 2026</div></div>
+            <div class="deco-item"><div>🏟️</div><div class="deco-text">Estadio Azteca</div></div>
+            <div class="deco-item"><div>🇲🇽</div><div class="deco-text">México 2026</div></div>
+            <div class="deco-item"><div>⚽</div><div class="deco-text">Balón Oficial</div></div>
+        </div>
+
+        <!-- GUÍA IMPRIMIBLE -->
+        <div class="guia-print">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <button class="btn-imprimir-guia" onclick="imprimirGuia()">📄 Imprimir guía en PDF</button>
+            </div>
+            <div class="guia-titulo">📋 GUÍA DE REFERENCIA PARA TÚ QUINIELA</div>
+            
+            <div class="ejemplo-lista" style="background:#fef9f0; text-align:center;">
+                📌 <strong>INSTRUCCIÓN:</strong> Selecciona la posición final (1°, 2°, 3° o 4°) que crees que ocupará cada equipo dentro de su grupo. Haz clic en el cuadrito correspondiente (☐) para marcarlo. Solo puedes marcar una posición por equipo.
+            </div>
+
+            <div class="ejemplo-lista" style="background:#fff5e6; text-align:center;">
+                📌 <strong>NOTA IMPORTANTE - TERCEROS LUGARES:</strong> Para los terceros lugares de cada grupo se eligen a los <strong>8 mejores terceros</strong> de los 12 grupos mediante una tabla comparativa de puntos y diferencia de goles.
+            </div>
+
+            <!-- GRUPOS CON BANDERAS -->
+            <div id="guiaGruposContainer"></div>
+
+            <div class="ejemplo-lista"><strong>📝 EJEMPLO DE CÓMO LLENAR:</strong> #73 → 2° Grupo A vs 2° Grupo B → Gana: <strong>México</strong> &nbsp;&nbsp; #89 → Ganador 74 vs Ganador 77 → Gana: <strong>Alemania</strong></div>
+            <div class="ejemplo-lista" style="background:#fef9f0;">
+                <strong>💡 ¿CÓMO USAR ESTA GUÍA?</strong><br>
+                1. Marca la posición final de cada equipo en los grupos (1°, 2°, 3° o 4°) haciendo clic en el cuadrito correspondiente.<br>
+                2. Escribe el nombre del equipo que crees que ganará en cada partido de eliminatorias para facilitar el llenado posterior de tu quiniela.<br>
+                3. Descarga el CSV y envíamelo a <strong>rlopez@odara.mx</strong>
+            </div>
+        </div>
+
+        <div class="footer">✅ Marca UN solo cuadrito por partido | 📥 Descarga el CSV y envíamelo antes del 10 de junio 2026</div>
+    </div>
+
+    <script>
+        function getBanderaUrl(pais) {
+            const codigos = {
+                "México": "mx", "Sudáfrica": "za", "Corea del Sur": "kr", "República Checa": "cz",
+                "Canadá": "ca", "Bosnia y Herzegovina": "ba", "Catar": "qa", "Suiza": "ch",
+                "Brasil": "br", "Marruecos": "ma", "Haití": "ht", "Escocia": "gb-sct",
+                "Estados Unidos": "us", "Paraguay": "py", "Australia": "au", "Turquía": "tr",
+                "Alemania": "de", "Curazao": "cw", "Costa de Marfil": "ci", "Ecuador": "ec",
+                "Países Bajos": "nl", "Japón": "jp", "Suecia": "se", "Túnez": "tn",
+                "Bélgica": "be", "Egipto": "eg", "Irán": "ir", "Nueva Zelanda": "nz",
+                "España": "es", "Cabo Verde": "cv", "Arabia Saudita": "sa", "Uruguay": "uy",
+                "Francia": "fr", "Senegal": "sn", "Irak": "iq", "Noruega": "no",
+                "Argentina": "ar", "Argelia": "dz", "Austria": "at", "Jordania": "jo",
+                "Portugal": "pt", "República Democrática del Congo": "cd", "Uzbekistán": "uz", "Colombia": "co",
+                "Inglaterra": "gb-eng", "Croacia": "hr", "Ghana": "gh", "Panamá": "pa", "RD Congo": "cd"
+            };
+            return `https://flagpedia.net/data/flags/icon/24x18/${codigos[pais] || "xx"}.png`;
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const notif = document.createElement('div');
+            notif.className = 'notificacion';
+            notif.textContent = mensaje;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2500);
+        }
+
+        // ========== FUNCIONES DE GUARDADO Y LIMPIEZA ==========
+        function guardarProgreso() {
+            try {
+                const pronosticos = [];
+                for (let i = 1; i <= 72; i++) {
+                    const seleccionado = document.querySelector(`input[name="p${i}"]:checked`);
+                    if (seleccionado) pronosticos.push({ partido: i, valor: seleccionado.value });
+                }
+                const nombre = document.getElementById('nombreParticipante').value;
+                const area = document.getElementById('areaParticipante').value;
+                const email = document.getElementById('emailParticipante').value;
+                localStorage.setItem('quiniela_pronosticos', JSON.stringify(pronosticos));
+                localStorage.setItem('quiniela_nombre', nombre);
+                localStorage.setItem('quiniela_area', area);
+                localStorage.setItem('quiniela_email', email);
+                mostrarNotificacion('✅ Progreso guardado (' + pronosticos.length + ' pronósticos)');
+            } catch(e) {
+                alert('Error al guardar: ' + e.message);
+            }
+        }
+
+        function limpiarProgreso() {
+            if (confirm('¿Estás seguro de que quieres LIMPIAR TODOS tus pronósticos? Esta acción no se puede deshacer.')) {
+                localStorage.removeItem('quiniela_pronosticos');
+                localStorage.removeItem('quiniela_nombre');
+                localStorage.removeItem('quiniela_area');
+                localStorage.removeItem('quiniela_email');
+                location.reload();
+            }
+        }
+
+        // Datos de grupos para la guía
+        const gruposGuia = [
+            { nombre: "A", equipos: ["México", "Sudáfrica", "Corea del Sur", "República Checa"] },
+            { nombre: "B", equipos: ["Canadá", "Bosnia y Herzegovina", "Catar", "Suiza"] },
+            { nombre: "C", equipos: ["Brasil", "Marruecos", "Haití", "Escocia"] },
+            { nombre: "D", equipos: ["Estados Unidos", "Paraguay", "Australia", "Turquía"] },
+            { nombre: "E", equipos: ["Alemania", "Curazao", "Costa de Marfil", "Ecuador"] },
+            { nombre: "F", equipos: ["Países Bajos", "Japón", "Suecia", "Túnez"] },
+            { nombre: "G", equipos: ["Bélgica", "Egipto", "Irán", "Nueva Zelanda"] },
+            { nombre: "H", equipos: ["España", "Cabo Verde", "Arabia Saudita", "Uruguay"] },
+            { nombre: "I", equipos: ["Francia", "Senegal", "Irak", "Noruega"] },
+            { nombre: "J", equipos: ["Argentina", "Argelia", "Austria", "Jordania"] },
+            { nombre: "K", equipos: ["Portugal", "RD Congo", "Uzbekistán", "Colombia"] },
+            { nombre: "L", equipos: ["Inglaterra", "Croacia", "Ghana", "Panamá"] }
+        ];
+
+        // Generar grupos de la guía con banderas reales
+        function generarGuiaGrupos() {
+            const container = document.getElementById('guiaGruposContainer');
+            let html = '';
+            
+            for (let i = 0; i < gruposGuia.length; i += 4) {
+                html += `<div class="fila-grupos">`;
+                for (let j = i; j < i + 4 && j < gruposGuia.length; j++) {
+                    const grupo = gruposGuia[j];
+                    html += `<div class="grupo-guia-card">
+                        <div class="grupo-guia-titulo">⚽ Grupo ${grupo.nombre}</div>`;
+                    for (let k = 0; k < grupo.equipos.length; k++) {
+                        const banderaUrl = getBanderaUrl(grupo.equipos[k]);
+                        html += `<div class="equipo-guia">
+                            <div class="equipo-guia-info">
+                                <img class="bandera-guia" src="${banderaUrl}" alt="${grupo.equipos[k]}" onerror="this.style.display='none'">
+                                <span class="equipo-guia-nombre">${grupo.equipos[k]}</span>
+                            </div>
+                            <div class="equipo-guia-posicion">
+                                <span class="posicion-cuadro" data-grupo="${grupo.nombre}" data-equipo="${grupo.equipos[k]}" data-pos="1">1°</span>
+                                <span class="posicion-cuadro" data-grupo="${grupo.nombre}" data-equipo="${grupo.equipos[k]}" data-pos="2">2°</span>
+                                <span class="posicion-cuadro" data-grupo="${grupo.nombre}" data-equipo="${grupo.equipos[k]}" data-pos="3">3°</span>
+                                <span class="posicion-cuadro" data-grupo="${grupo.nombre}" data-equipo="${grupo.equipos[k]}" data-pos="4">4°</span>
+                            </div>
+                        </div>`;
+                    }
+                    html += `</div>`;
+                }
+                html += `</div>`;
+            }
+            container.innerHTML = html;
+            
+            document.querySelectorAll('.posicion-cuadro').forEach(cuadro => {
+                cuadro.addEventListener('click', function() {
+                    const grupo = this.dataset.grupo;
+                    const equipo = this.dataset.equipo;
+                    const mismoGrupo = document.querySelectorAll(`.posicion-cuadro[data-grupo="${grupo}"][data-equipo="${equipo}"]`);
+                    mismoGrupo.forEach(c => c.classList.remove('checked'));
+                    this.classList.add('checked');
+                });
+            });
+        }
+
+        const partidos = [
+            { id: 1, numFIFA: "1", local: "México", visitante: "Sudáfrica", grupo: "A" },{ id: 2, numFIFA: "2", local: "Corea del Sur", visitante: "República Checa", grupo: "A" },
+            { id: 3, numFIFA: "3", local: "Sudáfrica", visitante: "Corea del Sur", grupo: "A" },{ id: 4, numFIFA: "4", local: "República Checa", visitante: "México", grupo: "A" },
+            { id: 5, numFIFA: "5", local: "México", visitante: "Corea del Sur", grupo: "A" },{ id: 6, numFIFA: "6", local: "Sudáfrica", visitante: "República Checa", grupo: "A" },
+            { id: 7, numFIFA: "7", local: "Canadá", visitante: "Bosnia y Herzegovina", grupo: "B" },{ id: 8, numFIFA: "8", local: "Catar", visitante: "Suiza", grupo: "B" },
+            { id: 9, numFIFA: "9", local: "Bosnia y Herzegovina", visitante: "Catar", grupo: "B" },{ id: 10, numFIFA: "10", local: "Suiza", visitante: "Canadá", grupo: "B" },
+            { id: 11, numFIFA: "11", local: "Canadá", visitante: "Catar", grupo: "B" },{ id: 12, numFIFA: "12", local: "Bosnia y Herzegovina", visitante: "Suiza", grupo: "B" },
+            { id: 13, numFIFA: "13", local: "Brasil", visitante: "Marruecos", grupo: "C" },{ id: 14, numFIFA: "14", local: "Haití", visitante: "Escocia", grupo: "C" },
+            { id: 15, numFIFA: "15", local: "Marruecos", visitante: "Haití", grupo: "C" },{ id: 16, numFIFA: "16", local: "Escocia", visitante: "Brasil", grupo: "C" },
+            { id: 17, numFIFA: "17", local: "Brasil", visitante: "Haití", grupo: "C" },{ id: 18, numFIFA: "18", local: "Marruecos", visitante: "Escocia", grupo: "C" },
+            { id: 19, numFIFA: "19", local: "Estados Unidos", visitante: "Paraguay", grupo: "D" },{ id: 20, numFIFA: "20", local: "Australia", visitante: "Turquía", grupo: "D" },
+            { id: 21, numFIFA: "21", local: "Paraguay", visitante: "Australia", grupo: "D" },{ id: 22, numFIFA: "22", local: "Turquía", visitante: "Estados Unidos", grupo: "D" },
+            { id: 23, numFIFA: "23", local: "Estados Unidos", visitante: "Australia", grupo: "D" },{ id: 24, numFIFA: "24", local: "Paraguay", visitante: "Turquía", grupo: "D" },
+            { id: 25, numFIFA: "25", local: "Alemania", visitante: "Curazao", grupo: "E" },{ id: 26, numFIFA: "26", local: "Costa de Marfil", visitante: "Ecuador", grupo: "E" },
+            { id: 27, numFIFA: "27", local: "Curazao", visitante: "Costa de Marfil", grupo: "E" },{ id: 28, numFIFA: "28", local: "Ecuador", visitante: "Alemania", grupo: "E" },
+            { id: 29, numFIFA: "29", local: "Alemania", visitante: "Costa de Marfil", grupo: "E" },{ id: 30, numFIFA: "30", local: "Curazao", visitante: "Ecuador", grupo: "E" },
+            { id: 31, numFIFA: "31", local: "Países Bajos", visitante: "Japón", grupo: "F" },{ id: 32, numFIFA: "32", local: "Suecia", visitante: "Túnez", grupo: "F" },
+            { id: 33, numFIFA: "33", local: "Japón", visitante: "Suecia", grupo: "F" },{ id: 34, numFIFA: "34", local: "Túnez", visitante: "Países Bajos", grupo: "F" },
+            { id: 35, numFIFA: "35", local: "Países Bajos", visitante: "Suecia", grupo: "F" },{ id: 36, numFIFA: "36", local: "Japón", visitante: "Túnez", grupo: "F" },
+            { id: 37, numFIFA: "37", local: "Bélgica", visitante: "Egipto", grupo: "G" },{ id: 38, numFIFA: "38", local: "Irán", visitante: "Nueva Zelanda", grupo: "G" },
+            { id: 39, numFIFA: "39", local: "Egipto", visitante: "Irán", grupo: "G" },{ id: 40, numFIFA: "40", local: "Nueva Zelanda", visitante: "Bélgica", grupo: "G" },
+            { id: 41, numFIFA: "41", local: "Bélgica", visitante: "Irán", grupo: "G" },{ id: 42, numFIFA: "42", local: "Egipto", visitante: "Nueva Zelanda", grupo: "G" },
+            { id: 43, numFIFA: "43", local: "España", visitante: "Cabo Verde", grupo: "H" },{ id: 44, numFIFA: "44", local: "Arabia Saudita", visitante: "Uruguay", grupo: "H" },
+            { id: 45, numFIFA: "45", local: "Cabo Verde", visitante: "Arabia Saudita", grupo: "H" },{ id: 46, numFIFA: "46", local: "Uruguay", visitante: "España", grupo: "H" },
+            { id: 47, numFIFA: "47", local: "España", visitante: "Arabia Saudita", grupo: "H" },{ id: 48, numFIFA: "48", local: "Cabo Verde", visitante: "Uruguay", grupo: "H" },
+            { id: 49, numFIFA: "49", local: "Francia", visitante: "Senegal", grupo: "I" },{ id: 50, numFIFA: "50", local: "Irak", visitante: "Noruega", grupo: "I" },
+            { id: 51, numFIFA: "51", local: "Senegal", visitante: "Irak", grupo: "I" },{ id: 52, numFIFA: "52", local: "Noruega", visitante: "Francia", grupo: "I" },
+            { id: 53, numFIFA: "53", local: "Francia", visitante: "Irak", grupo: "I" },{ id: 54, numFIFA: "54", local: "Senegal", visitante: "Noruega", grupo: "I" },
+            { id: 55, numFIFA: "55", local: "Argentina", visitante: "Argelia", grupo: "J" },{ id: 56, numFIFA: "56", local: "Austria", visitante: "Jordania", grupo: "J" },
+            { id: 57, numFIFA: "57", local: "Argelia", visitante: "Austria", grupo: "J" },{ id: 58, numFIFA: "58", local: "Jordania", visitante: "Argentina", grupo: "J" },
+            { id: 59, numFIFA: "59", local: "Argentina", visitante: "Austria", grupo: "J" },{ id: 60, numFIFA: "60", local: "Argelia", visitante: "Jordania", grupo: "J" },
+            { id: 61, numFIFA: "61", local: "Portugal", visitante: "República Democrática del Congo", grupo: "K" },{ id: 62, numFIFA: "62", local: "Uzbekistán", visitante: "Colombia", grupo: "K" },
+            { id: 63, numFIFA: "63", local: "RD Congo", visitante: "Uzbekistán", grupo: "K" },{ id: 64, numFIFA: "64", local: "Colombia", visitante: "Portugal", grupo: "K" },
+            { id: 65, numFIFA: "65", local: "Portugal", visitante: "Uzbekistán", grupo: "K" },{ id: 66, numFIFA: "66", local: "RD Congo", visitante: "Colombia", grupo: "K" },
+            { id: 67, numFIFA: "67", local: "Inglaterra", visitante: "Croacia", grupo: "L" },{ id: 68, numFIFA: "68", local: "Ghana", visitante: "Panamá", grupo: "L" },
+            { id: 69, numFIFA: "69", local: "Croacia", visitante: "Ghana", grupo: "L" },{ id: 70, numFIFA: "70", local: "Panamá", visitante: "Inglaterra", grupo: "L" },
+            { id: 71, numFIFA: "71", local: "Inglaterra", visitante: "Ghana", grupo: "L" },{ id: 72, numFIFA: "72", local: "Croacia", visitante: "Panamá", grupo: "L" }
+        ];
+
+        function generarGrupos() {
+            const container = document.getElementById('gruposContainer');
+            const grupos = [...new Map(partidos.map(p => [p.grupo, p.grupo])).keys()];
+            let html = '';
+            grupos.forEach(grupo => {
+                const partidosGrupo = partidos.filter(p => p.grupo === grupo);
+                html += `<div class="grupo"><div class="grupo-titulo">⚽ Grupo ${grupo}<span class="badge">${partidosGrupo.length} partidos</span></div>
+                    <div class="partido-header-grupos"><div class="header-numero">#</div><div class="header-check-local">G</div><div class="header-bandera-local"></div>
+                    <div class="header-equipo-local">LOCAL</div><div class="header-check-empate">E</div><div class="header-bandera-visitante"></div>
+                    <div class="header-equipo-visitante">VISITANTE</div><div class="header-check-visitante">G</div></div>`;
+                partidosGrupo.forEach(partido => {
+                    html += `<div class="partido-grupos"><div class="numero-partido">${partido.numFIFA}</div>
+                        <div class="check-local"><input type="checkbox" name="p${partido.id}" value="${partido.local}"></div>
+                        <div class="bandera-local"><img class="bandera" src="${getBanderaUrl(partido.local)}" onerror="this.style.display='none'"></div>
+                        <div class="equipo-local">${partido.local}</div>
+                        <div class="check-empate"><input type="checkbox" name="p${partido.id}" value="Empate"></div>
+                        <div class="bandera-visitante"><img class="bandera" src="${getBanderaUrl(partido.visitante)}" onerror="this.style.display='none'"></div>
+                        <div class="equipo-visitante">${partido.visitante}</div>
+                        <div class="check-visitante"><input type="checkbox" name="p${partido.id}" value="${partido.visitante}"></div>
+                    </div>`;
+                });
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function generarEliminatorias() {
+            const container = document.getElementById('eliminatoriasContainer');
+            let html = '';
+            
+            // DIECISEISAVOS
+            html += `<div class="ronda-wrapper"><div class="elim-titulo">⚽ DIECISEISAVOS DE FINAL <span class="badge">16 partidos</span></div><div class="elim-grid-3">`;
+            for (let i = 73; i <= 88; i++) {
+                let descripcion = "";
+                if (i === 73) descripcion = "2° Grupo A vs 2° Grupo B";
+                else if (i === 74) descripcion = "1° Grupo E vs 3° Grupo (A/B/C/D/F)";
+                else if (i === 75) descripcion = "1° Grupo F vs 2° Grupo C";
+                else if (i === 76) descripcion = "1° Grupo C vs 2° Grupo F";
+                else if (i === 77) descripcion = "1° Grupo I vs 3° Grupo (C/D/F/G/H)";
+                else if (i === 78) descripcion = "2° Grupo E vs 2° Grupo I";
+                else if (i === 79) descripcion = "1° Grupo A vs 3° Grupo (C/E/F/H/I)";
+                else if (i === 80) descripcion = "1° Grupo L vs 3° Grupo (E/H/I/J/K)";
+                else if (i === 81) descripcion = "1° Grupo D vs 3° Grupo (B/E/F/I/J)";
+                else if (i === 82) descripcion = "1° Grupo G vs 3° Grupo (A/E/H/I/J)";
+                else if (i === 83) descripcion = "2° Grupo K vs 2° Grupo L";
+                else if (i === 84) descripcion = "1° Grupo H vs 2° Grupo J";
+                else if (i === 85) descripcion = "1° Grupo B vs 3° Grupo (E/F/G/I/J)";
+                else if (i === 86) descripcion = "1° Grupo J vs 2° Grupo H";
+                else if (i === 87) descripcion = "1° Grupo K vs 3° Grupo (D/E/I/J/L)";
+                else if (i === 88) descripcion = "2° Grupo D vs 2° Grupo G";
+                
+                html += `<div class="elim-card"><div class="elim-header"><div class="elim-header-numero">#</div><div class="elim-header-check-izq">G</div><div class="elim-header-partido">PARTIDO</div><div class="elim-header-check-der">G</div></div>
+                    <div class="partido-elim"><div class="elim-numero">${i}</div><div class="elim-check-izq"><input type="checkbox" name="elim_${i}" value="Equipo A"></div>
+                    <div class="elim-descripcion">${descripcion}</div><div class="elim-check-der"><input type="checkbox" name="elim_${i}" value="Equipo B"></div></div></div>`;
+            }
+            html += `</div></div>`;
+            
+            // OCTAVOS
+            html += `<div class="ronda-wrapper"><div class="elim-titulo">⚽ OCTAVOS DE FINAL <span class="badge">8 partidos</span></div><div class="elim-grid-3">`;
+            for (let i = 89; i <= 96; i++) {
+                let descripcion = "";
+                if (i === 89) descripcion = "Ganador 74 vs Ganador 77";
+                else if (i === 90) descripcion = "Ganador 73 vs Ganador 75";
+                else if (i === 91) descripcion = "Ganador 76 vs Ganador 78";
+                else if (i === 92) descripcion = "Ganador 79 vs Ganador 80";
+                else if (i === 93) descripcion = "Ganador 83 vs Ganador 84";
+                else if (i === 94) descripcion = "Ganador 81 vs Ganador 82";
+                else if (i === 95) descripcion = "Ganador 86 vs Ganador 88";
+                else if (i === 96) descripcion = "Ganador 85 vs Ganador 87";
+                
+                html += `<div class="elim-card"><div class="elim-header"><div class="elim-header-numero">#</div><div class="elim-header-check-izq">G</div><div class="elim-header-partido">PARTIDO</div><div class="elim-header-check-der">G</div></div>
+                    <div class="partido-elim"><div class="elim-numero">${i}</div><div class="elim-check-izq"><input type="checkbox" name="elim_${i}" value="Equipo A"></div>
+                    <div class="elim-descripcion">${descripcion}</div><div class="elim-check-der"><input type="checkbox" name="elim_${i}" value="Equipo B"></div></div></div>`;
+            }
+            html += `</div></div>`;
+            
+            // CUARTOS
+            html += `<div class="ronda-wrapper"><div class="elim-titulo">⚽ CUARTOS DE FINAL <span class="badge">4 partidos</span></div><div class="elim-grid-2">`;
+            for (let i = 97; i <= 100; i++) {
+                let descripcion = "";
+                if (i === 97) descripcion = "Ganador 89 vs Ganador 90";
+                else if (i === 98) descripcion = "Ganador 93 vs Ganador 94";
+                else if (i === 99) descripcion = "Ganador 91 vs Ganador 92";
+                else if (i === 100) descripcion = "Ganador 95 vs Ganador 96";
+                
+                html += `<div class="elim-card"><div class="elim-header"><div class="elim-header-numero">#</div><div class="elim-header-check-izq">G</div><div class="elim-header-partido">PARTIDO</div><div class="elim-header-check-der">G</div></div>
+                    <div class="partido-elim"><div class="elim-numero">${i}</div><div class="elim-check-izq"><input type="checkbox" name="elim_${i}" value="Equipo A"></div>
+                    <div class="elim-descripcion">${descripcion}</div><div class="elim-check-der"><input type="checkbox" name="elim_${i}" value="Equipo B"></div></div></div>`;
+            }
+            html += `</div></div>`;
+            
+            // SEMIFINALES
+            html += `<div class="ronda-wrapper"><div class="elim-titulo">⚽ SEMIFINALES <span class="badge">2 partidos</span></div><div class="elim-grid-2">`;
+            for (let i = 101; i <= 102; i++) {
+                let descripcion = (i === 101) ? "Ganador 97 vs Ganador 98" : "Ganador 99 vs Ganador 100";
+                html += `<div class="elim-card"><div class="elim-header"><div class="elim-header-numero">#</div><div class="elim-header-check-izq">G</div><div class="elim-header-partido">PARTIDO</div><div class="elim-header-check-der">G</div></div>
+                    <div class="partido-elim"><div class="elim-numero">${i}</div><div class="elim-check-izq"><input type="checkbox" name="elim_${i}" value="Equipo A"></div>
+                    <div class="elim-descripcion">${descripcion}</div><div class="elim-check-der"><input type="checkbox" name="elim_${i}" value="Equipo B"></div></div></div>`;
+            }
+            html += `</div></div>`;
+            
+            // TERCER LUGAR
+            html += `<div class="ronda-wrapper"><div class="elim-titulo">⚽ TERCER LUGAR</div><div class="elim-grid-1">`;
+            html += `<div class="elim-card"><div class="elim-header"><div class="elim-header-numero">#</div><div class="elim-header-check-izq">G</div><div class="elim-header-partido">PARTIDO</div><div class="elim-header-check-der">G</div></div>
+                <div class="partido-elim"><div class="elim-numero">103</div><div class="elim-check-izq"><input type="checkbox" name="elim_103" value="Equipo A"></div>
+                <div class="elim-descripcion">Perdedor 101 vs Perdedor 102</div><div class="elim-check-der"><input type="checkbox" name="elim_103" value="Equipo B"></div></div></div>`;
+            html += `</div></div>`;
+            
+            // GRAN FINAL
+            html += `<div class="ronda-wrapper"><div class="elim-titulo" style="background: linear-gradient(135deg, #f5a623, #e8920a);">🏆 GRAN FINAL</div><div class="elim-grid-1">`;
+            html += `<div class="elim-card"><div class="elim-header"><div class="elim-header-numero">#</div><div class="elim-header-check-izq">G</div><div class="elim-header-partido">PARTIDO</div><div class="elim-header-check-der">G</div></div>
+                <div class="partido-elim"><div class="elim-numero">104</div><div class="elim-check-izq"><input type="checkbox" name="elim_104" value="Equipo A"></div>
+                <div class="elim-descripcion">Ganador 101 vs Ganador 102</div><div class="elim-check-der"><input type="checkbox" name="elim_104" value="Equipo B"></div></div></div>`;
+            html += `</div></div>`;
+            
+            container.innerHTML = html;
+        }
+
+        function validarQuinielaCompleta() {
+            let faltantes = [];
+            for (let i = 1; i <= partidos.length; i++) {
+                const marcado = document.querySelector(`input[name="p${i}"]:checked`);
+                if (!marcado) faltantes.push(i);
+            }
+            for (let i = 73; i <= 104; i++) {
+                const marcado = document.querySelector(`input[name="elim_${i}"]:checked`);
+                if (!marcado) faltantes.push(i);
+            }
+            return faltantes;
+        }
+
+        function configurarCheckboxes() {
+            for (let i = 1; i <= partidos.length; i++) {
+                const checkboxes = document.querySelectorAll(`input[name="p${i}"]`);
+                checkboxes.forEach(cb => cb.addEventListener('change', function() { if(this.checked) checkboxes.forEach(o => o !== this && (o.checked=false)); }));
+            }
+            for (let i = 73; i <= 104; i++) {
+                const checkboxes = document.querySelectorAll(`input[name="elim_${i}"]`);
+                checkboxes.forEach(cb => cb.addEventListener('change', function() { if(this.checked) checkboxes.forEach(o => o !== this && (o.checked=false)); }));
+            }
+        }
+
+        function obtenerPronosticos() {
+            const nombre = document.getElementById('nombreParticipante').value.trim();
+            if (!nombre) { alert('⚠️ Escribe tu nombre'); return null; }
+            
+            const faltantes = validarQuinielaCompleta();
+            if (faltantes.length > 0) {
+                alert(`⚠️ Te faltan marcar pronósticos en los partidos: ${faltantes.slice(0, 20).join(', ')}${faltantes.length > 20 ? '...' : ''}\n\nPor favor, marca todos los partidos antes de continuar.`);
+                return null;
+            }
+            
+            const area = document.getElementById('areaParticipante').value.trim();
+            const email = document.getElementById('emailParticipante').value.trim();
+            const pronosticos = [];
+            for (let i = 1; i <= partidos.length; i++) {
+                const s = document.querySelector(`input[name="p${i}"]:checked`);
+                const p = partidos[i-1];
+                pronosticos.push({ numFIFA: p.numFIFA, partido: `${p.local} vs ${p.visitante}`, pronostico: s ? s.value : 'Sin marcar' });
+            }
+            for (let i = 73; i <= 104; i++) {
+                const s = document.querySelector(`input[name="elim_${i}"]:checked`);
+                let descripcion = `Eliminatoria #${i}`;
+                if (i >= 73 && i <= 88) {
+                    if (i === 73) descripcion = "2° Grupo A vs 2° Grupo B";
+                    else if (i === 74) descripcion = "1° Grupo E vs 3° Grupo (A/B/C/D/F)";
+                    else if (i === 75) descripcion = "1° Grupo F vs 2° Grupo C";
+                    else if (i === 76) descripcion = "1° Grupo C vs 2° Grupo F";
+                    else if (i === 77) descripcion = "1° Grupo I vs 3° Grupo (C/D/F/G/H)";
+                    else if (i === 78) descripcion = "2° Grupo E vs 2° Grupo I";
+                    else if (i === 79) descripcion = "1° Grupo A vs 3° Grupo (C/E/F/H/I)";
+                    else if (i === 80) descripcion = "1° Grupo L vs 3° Grupo (E/H/I/J/K)";
+                    else if (i === 81) descripcion = "1° Grupo D vs 3° Grupo (B/E/F/I/J)";
+                    else if (i === 82) descripcion = "1° Grupo G vs 3° Grupo (A/E/H/I/J)";
+                    else if (i === 83) descripcion = "2° Grupo K vs 2° Grupo L";
+                    else if (i === 84) descripcion = "1° Grupo H vs 2° Grupo J";
+                    else if (i === 85) descripcion = "1° Grupo B vs 3° Grupo (E/F/G/I/J)";
+                    else if (i === 86) descripcion = "1° Grupo J vs 2° Grupo H";
+                    else if (i === 87) descripcion = "1° Grupo K vs 3° Grupo (D/E/I/J/L)";
+                    else if (i === 88) descripcion = "2° Grupo D vs 2° Grupo G";
+                } else if (i >= 89 && i <= 96) {
+                    if (i === 89) descripcion = "Ganador 74 vs Ganador 77";
+                    else if (i === 90) descripcion = "Ganador 73 vs Ganador 75";
+                    else if (i === 91) descripcion = "Ganador 76 vs Ganador 78";
+                    else if (i === 92) descripcion = "Ganador 79 vs Ganador 80";
+                    else if (i === 93) descripcion = "Ganador 83 vs Ganador 84";
+                    else if (i === 94) descripcion = "Ganador 81 vs Ganador 82";
+                    else if (i === 95) descripcion = "Ganador 86 vs Ganador 88";
+                    else if (i === 96) descripcion = "Ganador 85 vs Ganador 87";
+                } else if (i >= 97 && i <= 100) {
+                    if (i === 97) descripcion = "Ganador 89 vs Ganador 90";
+                    else if (i === 98) descripcion = "Ganador 93 vs Ganador 94";
+                    else if (i === 99) descripcion = "Ganador 91 vs Ganador 92";
+                    else if (i === 100) descripcion = "Ganador 95 vs Ganador 96";
+                } else if (i === 101) descripcion = "Ganador 97 vs Ganador 98";
+                else if (i === 102) descripcion = "Ganador 99 vs Ganador 100";
+                else if (i === 103) descripcion = "Perdedor 101 vs Perdedor 102";
+                else if (i === 104) descripcion = "Ganador 101 vs Ganador 102";
+                pronosticos.push({ numFIFA: i.toString(), partido: descripcion, pronostico: s ? s.value : 'Sin marcar' });
+            }
+            return { nombre, area, email, pronosticos };
+        }
+
+        function descargarCSV() {
+            const data = obtenerPronosticos();
+            if(!data) return;
+            let csv = "# FIFA,Partido, Pronóstico\n";
+            data.pronosticos.forEach(p => csv += `${p.numFIFA},"${p.partido}","${p.pronostico}"\n`);
+            const blob = new Blob([csv], {type: 'text/csv'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `quiniela_odara_${data.nombre.replace(/ /g,'_')}.csv`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            alert('✅ CSV generado correctamente');
+        }
+
+        function enviarPorCorreo() {
+            const data = obtenerPronosticos();
+            if(!data) return;
+            let csv = "# FIFA,Partido, Pronóstico\n";
+            data.pronosticos.forEach(p => csv += `${p.numFIFA},"${p.partido}","${p.pronostico}"\n`);
+            let cuerpo = `Nombre: ${data.nombre}\n`;
+            if(data.area) cuerpo += `Área: ${data.area}\n`;
+            if(data.email) cuerpo += `Email: ${data.email}\n`;
+            cuerpo += `\n${csv}`;
+            window.location.href = `mailto:rlopez@odara.mx?subject=Quiniela ODARA - Fase Grupos - ${data.nombre}&body=${encodeURIComponent(cuerpo)}`;
+            alert('📧 Se abrirá tu correo. Adjunta el CSV si es necesario.');
+        }
+
+        function imprimirSoloQuiniela() {
+            const nombreParticipante = document.getElementById('nombreParticipante').value.trim() || '___________';
+            const areaParticipante = document.getElementById('areaParticipante').value.trim() || '___________';
+            const emailParticipante = document.getElementById('emailParticipante').value.trim() || '___________';
+            
+            const checkboxesGrupos = {};
+            for (let i = 1; i <= 72; i++) {
+                const seleccionado = document.querySelector(`input[name="p${i}"]:checked`);
+                if (seleccionado) checkboxesGrupos[i] = seleccionado.value;
+            }
+            
+            const gruposHTML = document.getElementById('gruposContainer').cloneNode(true);
+            
+            const iframe = document.createElement('iframe');
+            iframe.style.position = 'absolute';
+            iframe.style.width = '0';
+            iframe.style.height = '0';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+            
+            const contenidoImpresion = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Quiniela Mundial 2026 - ODARA</title>
+                    <style>
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body {
+                            font-family: 'Segoe UI', -apple-system, 'Roboto', sans-serif;
+                            padding: 10px;
+                            background: white;
+                        }
+                        @page {
+                            size: letter;
+                            margin: 0.3in;
+                        }
+                        .header-print {
+                            text-align: center;
+                            margin-bottom: 15px;
+                            padding-bottom: 10px;
+                            border-bottom: 2px solid #f5a623;
+                        }
+                        .header-print h1 {
+                            font-size: 18px;
+                            color: #1a1a2e;
+                        }
+                        .header-print .subtitulo-print {
+                            font-size: 14px;
+                            color: #f5a623;
+                            font-weight: bold;
+                        }
+                        .participante-print {
+                            margin-bottom: 15px;
+                            padding: 8px;
+                            background: #f5f5f5;
+                            border-radius: 8px;
+                            font-size: 11px;
+                        }
+                        .puntuacion-print {
+                            margin-bottom: 15px;
+                            padding: 6px;
+                            background: #e8f0fe;
+                            border-radius: 8px;
+                            font-size: 10px;
+                            display: flex;
+                            gap: 20px;
+                            flex-wrap: wrap;
+                        }
+                        .grupos-wrapper {
+                            display: grid;
+                            grid-template-columns: repeat(3, 1fr);
+                            gap: 10px;
+                            margin-bottom: 20px;
+                        }
+                        .grupo {
+                            border: 1px solid #e5e7eb;
+                            border-radius: 10px;
+                            overflow: hidden;
+                            break-inside: avoid;
+                            page-break-inside: avoid;
+                        }
+                        .grupo-titulo {
+                            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%);
+                            color: white;
+                            padding: 6px 10px;
+                            font-size: 11px;
+                            font-weight: bold;
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                        .grupo-titulo .badge {
+                            background: #f5a623;
+                            color: #1a1a2e;
+                            padding: 2px 8px;
+                            border-radius: 20px;
+                            font-size: 8px;
+                        }
+                        .partido-header-grupos {
+                            display: grid;
+                            grid-template-columns: 30px 35px 30px 1fr 35px 30px 1fr 35px;
+                            align-items: center;
+                            padding: 5px 8px;
+                            background: #f8f9fa;
+                            border-bottom: 1px solid #f5a623;
+                            font-weight: 700;
+                            font-size: 8px;
+                            color: #555;
+                            gap: 2px;
+                        }
+                        .partido-grupos {
+                            display: grid;
+                            grid-template-columns: 30px 35px 30px 1fr 35px 30px 1fr 35px;
+                            align-items: center;
+                            padding: 4px 8px;
+                            border-bottom: 1px solid #f0f0f0;
+                            gap: 2px;
+                        }
+                        .numero-partido {
+                            text-align: center;
+                            font-weight: bold;
+                            color: #f5a623;
+                            background: #fef9f0;
+                            padding: 2px 0;
+                            border-radius: 15px;
+                            font-size: 8px;
+                        }
+                        .check-local, .check-empate, .check-visitante { text-align: center; }
+                        .check-local input, .check-empate input, .check-visitante input {
+                            width: 12px;
+                            height: 12px;
+                            margin: 0;
+                            accent-color: #f5a623;
+                        }
+                        .bandera-local, .bandera-visitante { text-align: center; }
+                        .bandera { width: 20px; height: 14px; object-fit: cover; vertical-align: middle; }
+                        .equipo-local, .equipo-visitante { font-weight: 600; font-size: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+                        .equipo-local { color: #1a1a2e; text-align: left; }
+                        .equipo-visitante { color: #666; text-align: left; }
+                        
+                        .eliminatorias-container { display: flex; flex-direction: column; align-items: center; width: 100%; }
+                        .ronda-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+                        .elim-titulo { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%); color: white; padding: 6px 15px; font-size: 11px; font-weight: bold; border-radius: 25px; margin-bottom: 10px; display: inline-block; text-align: center; }
+                        .elim-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 100%; margin: 0 auto; }
+                        .elim-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 800px; margin: 0 auto; }
+                        .elim-grid-1 { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: 450px; margin: 0 auto; }
+                        .elim-card { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; background: white; width: 100%; break-inside: avoid; page-break-inside: avoid; }
+                        .elim-header { display: grid; grid-template-columns: 30px 35px 1fr 35px; align-items: center; padding: 5px 8px; background: #f8f9fa; border-bottom: 1px solid #f5a623; font-weight: 700; font-size: 8px; color: #555; gap: 2px; }
+                        .partido-elim { display: grid; grid-template-columns: 30px 35px 1fr 35px; align-items: center; padding: 5px 8px; gap: 2px; }
+                        .elim-numero { text-align: center; font-weight: bold; color: #f5a623; background: #fef9f0; padding: 2px 0; border-radius: 15px; font-size: 8px; }
+                        .elim-check-izq, .elim-check-der { text-align: center; }
+                        .elim-check-izq input, .elim-check-der input { width: 12px; height: 12px; margin: 0; accent-color: #f5a623; }
+                        .elim-descripcion { font-weight: 500; font-size: 8px; text-align: center; color: #1a1a2e; }
+                        .footer-print { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #e0e0e0; font-size: 8px; color: #999; }
+                        @media print { body { margin: 0; padding: 0; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header-print">
+                        <h1>🏆 Copa Mundial de la FIFA 2026™</h1>
+                        <div class="subtitulo-print">QUINIELA ODARA | FASE DE GRUPOS</div>
+                    </div>
+                    <div class="participante-print">
+                        <strong>👤 Nombre:</strong> ${nombreParticipante} &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <strong>📌 Área:</strong> ${areaParticipante} &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <strong>📧 Email:</strong> ${emailParticipante}
+                    </div>
+                    <div class="puntuacion-print">
+                        <span>⚽ <strong>Puntuación:</strong></span>
+                        <span>🏆 3 pts - Ganador correcto</span>
+                        <span>🤝 1 pt - Empate correcto</span>
+                        <span>📅 Fecha límite: 10 de junio 2026</span>
+                    </div>
+                    ${gruposHTML.outerHTML}
+                    <div class="footer-print">
+                        ✅ Marca UN solo cuadrito por partido | 📥 Envía tu CSV antes del 10 de junio 2026 a rlopez@odara.mx
+                    </div>
+                    <script>
+                        const gruposCheck = ${JSON.stringify(checkboxesGrupos)};
+                        for (let i = 1; i <= 72; i++) {
+                            const checkboxes = document.querySelectorAll('input[name="p' + i + '"]');
+                            checkboxes.forEach(cb => {
+                                if (gruposCheck[i] === cb.value) {
+                                    cb.checked = true;
+                                }
+                            });
+                        }
+                    <\/script>
+                </body>
+                </html>
+            `;
+            
+            iframe.contentDocument.open();
+            iframe.contentDocument.write(contenidoImpresion);
+            iframe.contentDocument.close();
+            
+            iframe.onload = function() {
+                setTimeout(() => {
+                    iframe.contentWindow.print();
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                    }, 500);
+                }, 200);
+            };
+        }
+
+        function imprimirGuia() {
+            const guiaContainer = document.querySelector('.guia-print');
+            if (!guiaContainer) {
+                alert('Error: No se encontró la guía para imprimir');
+                return;
+            }
+            
+            const guiaClone = guiaContainer.cloneNode(true);
+            const botones = guiaClone.querySelectorAll('button');
+            botones.forEach(btn => btn.remove());
+            
+            const inputs = guiaClone.querySelectorAll('.partido-guia-ganador input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.removeAttribute('placeholder');
+            });
+            
+            const iframe = document.createElement('iframe');
+            iframe.style.position = 'absolute';
+            iframe.style.width = '0';
+            iframe.style.height = '0';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+            
+            const contenidoImpresion = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Guía de Referencia - Mundial 2026</title>
+                    <style>
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body {
+                            font-family: 'Segoe UI', -apple-system, 'Roboto', sans-serif;
+                            padding: 10px;
+                            background: white;
+                        }
+                        @page {
+                            size: letter;
+                            margin: 0.2in;
+                        }
+                        button { display: none !important; }
+                        .guia-titulo { font-size: 22px; text-align: center; margin-bottom: 20px; }
+                        .ejemplo-lista { background: #e8f0fe; padding: 8px; border-radius: 8px; margin: 10px 0; font-size: 11px; }
+                        .fila-grupos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; }
+                        .grupo-guia-card { border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+                        .grupo-guia-titulo { background: linear-gradient(135deg, #1a1a2e 0%, #2d2d4a 100%); color: white; padding: 6px 10px; font-size: 11px; text-align: center; }
+                        .equipo-guia { display: flex; justify-content: space-between; padding: 5px 8px; border-bottom: 1px solid #f0f0f0; }
+                        .equipo-guia-info { display: flex; align-items: center; gap: 6px; }
+                        .bandera-guia { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+                        .equipo-guia-nombre { font-weight: 500; font-size: 9px; }
+                        .equipo-guia-posicion { display: flex; gap: 3px; }
+                        .posicion-cuadro { width: 16px; height: 16px; border: 1px solid #aaa; border-radius: 2px; text-align: center; font-size: 8px; background: #fafafa; display: inline-flex; align-items: center; justify-content: center; }
+                        .arbol-guia { margin-top: 15px; }
+                        .arbol-titulo { font-size: 16px; text-align: center; margin-bottom: 15px; }
+                        .ronda-guia { margin-bottom: 20px; }
+                        .ronda-guia-titulo { background: #f5a623; color: #1a1a2e; padding: 4px 12px; border-radius: 20px; font-weight: bold; display: inline-block; margin-bottom: 10px; font-size: 11px; }
+                        .guia-elim-header { display: grid; grid-template-columns: 30px 1fr 90px 30px 1fr 90px; align-items: center; padding: 4px 8px; background: #f8f9fa; border-bottom: 1px solid #f5a623; font-weight: 700; font-size: 8px; margin-bottom: 5px; border-radius: 5px; }
+                        .elim-filas-2 { display: flex; flex-direction: column; gap: 8px; }
+                        .fila-partidos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+                        .partido-guia { display: grid; grid-template-columns: 25px 1fr 90px; align-items: center; padding: 4px 6px; background: #f8f9fa; border-radius: 5px; border-left: 2px solid #f5a623; }
+                        .partido-guia-numero { font-weight: bold; color: #f5a623; font-size: 8px; }
+                        .partido-guia-desc { font-size: 8px; font-weight: 500; }
+                        .partido-guia-ganador input { width: 100%; padding: 3px; border: 1px solid #ccc; border-radius: 3px; font-size: 8px; }
+                        .elim-1-columna { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: 400px; margin: 0 auto; }
+                        .partido-guia-centrado { display: grid; grid-template-columns: 25px 1fr 90px; align-items: center; padding: 4px 6px; background: #f8f9fa; border-radius: 5px; border-left: 2px solid #f5a623; width: 100%; }
+                        @media print { body { margin: 0; padding: 0; } }
+                    </style>
+                </head>
+                <body>
+                    ${guiaClone.innerHTML}
+                </body>
+                </html>
+            `;
+            
+            iframe.contentDocument.open();
+            iframe.contentDocument.write(contenidoImpresion);
+            iframe.contentDocument.close();
+            
+            iframe.onload = function() {
+                setTimeout(() => {
+                    iframe.contentWindow.print();
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                    }, 500);
+                }, 300);
+            };
+        }
+
+        generarGrupos();
+        generarEliminatorias();
+        generarGuiaGrupos();
+        setTimeout(configurarCheckboxes, 100);
+    </script>
+</body>
+</html>
+```
